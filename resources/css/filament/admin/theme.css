@@ -1,0 +1,86 @@
+@import "../../../../vendor/filament/filament/resources/css/theme.css";
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/**/*';
+
+:root {
+    --fi-primary-50: 255 235 235;
+    --fi-primary-100: 255 205 205;
+    --fi-primary-200: 255 175 175;
+    --fi-primary-300: 255 140 140;
+    --fi-primary-400: 255 105 105;
+    --fi-primary-500: 255 49 49; /* #FF3131 */
+    --fi-primary-600: 225 40 40;
+    --fi-primary-700: 195 32 32;
+    --fi-primary-800: 165 25 25;
+    --fi-primary-900: 130 20 20;
+}
+
+.fi-sidebar-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.fi-sidebar-nav {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+aside.fi-sidebar {
+    @apply bg-gradient-to-b from-slate-700 to-slate-800 
+    dark:bg-gradient-to-b dark:from-gray-800 dark:to-gray-900;
+
+    & .fi-sidebar-nav-groups {
+        @apply gap-y-3;
+    }
+
+    & .fi-sidebar-nav {
+        @apply px-4 pt-4;
+
+        & li.fi-sidebar-item {
+            & .fi-sidebar-item-label,
+            .fi-sidebar-item-icon {
+                @apply text-gray-100;
+            }
+        }
+        & li.fi-sidebar-item.fi-active,
+        li.fi-sidebar-item:hover {
+            & .fi-sidebar-item-label,
+            .fi-sidebar-item-icon {
+                @apply text-gray-100;
+            }
+            & a.fi-sidebar-item-btn {
+                @apply bg-primary-500;
+            }
+        }
+
+        & .fi-sidebar-group-btn span,
+        button {
+            @apply text-gray-400;
+        }
+    }
+    header.fi-sidebar-header {
+        @apply bg-slate-700 dark:bg-gray-800;
+    }
+}
+
+/* login */
+.fi-simple-layout {
+    background-image: url("../../../images/bg.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.fi-simple-main {
+    /* @apply bg-emerald-100/50; */
+}
+
+/* Topbar */
+nav.fi-topbar {
+    @apply bg-slate-700
+    dark:bg-gray-800;
+}
+
+div.fi-logo {
+    @apply text-gray-100;
+}
