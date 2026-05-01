@@ -2,7 +2,16 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Widgets\PurchaseChartWidget;
+use App\Filament\Pages\Auth\Login;
+use App\Filament\Pages\Dashboard as PagesDashboard;
+use App\Filament\Pages\Profile;
+use App\Filament\Widgets\CustomerChart;
+use App\Filament\Widgets\ItemStatsWidget;
+use App\Filament\Widgets\LatestOrders;
+use App\Filament\Widgets\LowStockItems;
+use App\Filament\Widgets\OrderChart;
+use App\Filament\Widgets\OrderRevenueStats;
+// use App\Filament\Widgets\UnreadNotifications;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -27,26 +36,36 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('admin')
-            ->login()
+            ->path('')
+            ->login(Login::class)
+            ->profile(Profile::class)
+            ->databaseNotifications()
             ->colors([
                 'primary' => Color::Red,
             ])
+            ->font('Quicksand')
             ->brandName('Stokita')
+            ->brandLogo(asset('images/logo.png'))
+            ->favicon(asset('images/favicon.png'))
             ->sidebarCollapsibleOnDesktop()
-            ->sidebarWidth('13rem')
+            // ->sidebarFullyCollapsibleOnDesktop()
+            ->sidebarWidth('15rem')
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->collapsibleNavigationGroups(false)
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
-                Dashboard::class,
+                PagesDashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
-                AccountWidget::class,
-                // FilamentInfoWidget::class,
-                // PurchaseChartWidget::class,
+                // AccountWidget::class,
+                OrderRevenueStats::class,
+                // ItemStatsWidget::class,
+                LowStockItems::class,
+                OrderChart::class,
+                CustomerChart::class,
+                LatestOrders::class,
             ])
             ->middleware([
                 EncryptCookies::class,

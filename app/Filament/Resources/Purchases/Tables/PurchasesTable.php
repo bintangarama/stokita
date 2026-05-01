@@ -2,11 +2,15 @@
 
 namespace App\Filament\Resources\Purchases\Tables;
 
+use App\Filament\Exports\PurchaseExporter;
 use App\Services\PurchaseService;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ExportAction;
+use Filament\Actions\ExportBulkAction;
+use Filament\Actions\Exports\Models\Export;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -69,6 +73,12 @@ class PurchasesTable
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
+                    ExportBulkAction::make('export')
+                        ->label('Export Terepilih')
+                        ->fileName(fn() => 'pesanan-' . now()->format('Y-m-d'))
+                        ->exporter(PurchaseExporter::class),
+                    // Optional: batasi format yang diizinkan
+
                 ]),
             ]);
     }

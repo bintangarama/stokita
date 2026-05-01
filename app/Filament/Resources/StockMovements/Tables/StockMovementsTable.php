@@ -51,9 +51,24 @@ class StockMovementsTable
                     ->sortable(),
                 TextColumn::make('qty')
                     ->label('Qty')
-                    ->numeric(4),
-                TextColumn::make('unit.name')
-                    ->label('Satuan'),
+                    ->numeric(),
+                TextColumn::make('item.baseUnit.name')
+                    ->label('Satuan Dasar')
+                    ->sortable(),
+                // target edit
+                // TextColumn::make('qty')
+                //     ->label('Qty (Base)')
+                //     ->formatStateUsing(
+                //         fn($record) =>
+                //         $record->qty . ' ' . $record->item->baseUnit->name
+                //     ),
+
+                // TextColumn::make('qty_display')
+                //     ->label('Qty Display')
+                //     ->getStateUsing(function ($record) {
+                //         return $record->qty . ' ' . $record->item->baseUnit->name;
+                //     }),
+
                 TextColumn::make('unit_cost')
                     ->label('Cost')
                     ->money('IDR', true),

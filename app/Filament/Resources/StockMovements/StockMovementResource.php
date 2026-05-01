@@ -15,6 +15,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class StockMovementResource extends Resource
 {
@@ -22,7 +23,11 @@ class StockMovementResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrows-up-down';
 
-    protected static ?string $recordTitleAttribute = 'StockMovement';
+    protected static ?string $navigationLabel = 'Riwayat Stok';
+    protected static string | UnitEnum | null $navigationGroup = 'MONITORING';
+    protected static ?string $modelLabel = 'Riwayat Stok';
+    protected static ?string $slug = 'riwayat-stok';
+    protected static ?string $recordTitleAttribute = 'movement_type';
 
     public static function form(Schema $schema): Schema
     {

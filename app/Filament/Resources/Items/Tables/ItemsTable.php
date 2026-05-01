@@ -12,6 +12,7 @@ use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 // use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
@@ -43,9 +44,6 @@ class ItemsTable
                         'finish_good' => 'Finish Good',
                         default => $state,
                     }),
-                TextColumn::make('baseUnit.name')
-                    ->label('Satuan Dasar')
-                    ->sortable(),
                 IconColumn::make('track_stock')
                     ->boolean(),
                 TextColumn::make('reorder_threshold')
@@ -53,15 +51,19 @@ class ItemsTable
                     ->sortable(),
                 TextColumn::make('current_stock')
                     ->label('Stok Sekarang')
-                    ->numeric(4)
+                    // ->numeric()
+                    ->badge()
                     ->sortable()
                     ->color(
-                        fn(Item $record) =>
-                        $record->track_stock && $record->current_stock <= $record->reorder_threshold
+                        fn($record) =>
+                        $record->current_stock <= $record->reorder_threshold
                             ? 'danger'
                             : 'success'
                     )
-                    ->formatStateUsing(fn($state) => number_format($state, 4)),
+                    ->formatStateUsing(fn($state) => number_format($state, 1)),
+                TextColumn::make('baseUnit.name')
+                    ->label('Satuan Dasar')
+                    ->sortable(),
                 TextColumn::make('average_cost')
                     ->label('Harga Rata-rata')
                     ->money('IDR', true)
@@ -89,6 +91,12 @@ class ItemsTable
             ])
             ->filters([
                 // TrashedFilter::make(),
+                Filter::make('low_stock')
+                    ->label('Low Stock')
+                    ->query(
+                        fn($query) =>
+                        $query->whereColumn('current_stock', '<=', 'reorder_threshold')
+                    ),
             ])
             ->recordActions([
                 ViewAction::make(),

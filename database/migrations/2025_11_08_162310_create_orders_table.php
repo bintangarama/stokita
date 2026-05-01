@@ -19,7 +19,7 @@ return new class extends Migration
             $table->decimal('total_amount', 25, 4)->default(0);
             $table->decimal('discount', 25, 4)->default(0);
             $table->decimal('grand_total', 25, 4)->default(0);
-            $table->enum('status', ['pending', 'processing', 'completed', 'cancelled'])->default('pending');
+            $table->enum('status', ['draft', 'confirmed', 'completed', 'cancelled'])->default('draft');
             $table->foreignId('created_by')->nullable()->constrained('users');
             $table->text('notes')->nullable();
             $table->timestamps();

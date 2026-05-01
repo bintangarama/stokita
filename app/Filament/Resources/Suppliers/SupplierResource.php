@@ -24,9 +24,13 @@ class SupplierResource extends Resource
     protected static ?string $model = Supplier::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-truck';
-    protected static string | UnitEnum | null $navigationGroup = 'Master Data';
 
-    protected static ?string $recordTitleAttribute = 'Supplier';
+    protected static ?string $navigationLabel = 'Pemasok';
+    protected static string | UnitEnum | null $navigationGroup = 'DATA MASTER';
+    protected static ?string $modelLabel = 'Pemasok';
+    protected static ?string $slug = 'pemasok';
+
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Schema $schema): Schema
     {

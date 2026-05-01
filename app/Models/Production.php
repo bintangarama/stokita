@@ -34,7 +34,6 @@ class Production extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
     public function producedItem(): BelongsTo
     {
         return $this->belongsTo(Item::class, 'produced_item_id');

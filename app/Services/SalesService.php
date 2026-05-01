@@ -2,87 +2,120 @@
 
 namespace App\Services;
 
-/**
- * Class SalesService.
- */
-
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\StockMovement;
+use App\Services\StockRecalculationService;
 use App\Services\UnitConversionService;
 use Illuminate\Support\Facades\DB;
 
 class SalesService
 {
-    /**
-     * Confirm a sale order and reduce stock
-     */
-    public static function confirm(Order $order): void
+    public static function process(Order $order): void
     {
         DB::transaction(function () use ($order) {
-            foreach ($order->items as $itemRow) {
-                $item = $itemRow->item;
 
-                // Convert sold qty to base unit
-                $qtyInBase = UnitConversionService::convert(
-                    $itemRow->qty,
-                    $itemRow->unit_id,
-                    $item->base_unit_id
-                );
+            // Load relasi baru setelah update form
+            $order->load('items.item');
 
-                // Update item stock
-                $item->current_stock -= $qtyInBase;
-                $item->save();
-
-                // Record stock movement
-                StockMovement::create([
-                    'item_id' => $item->id,
-                    'movement_type' => 'sale_out',
-                    'reference_table' => 'orders',
-                    'reference_id' => $order->id,
-                    'qty' => -abs($itemRow->qty),
-                    'unit_id' => $itemRow->unit_id,
-                    'unit_cost' => $item->average_cost,
-                    'created_by' => $order->created_by,
-                    'notes' => 'Sale confirmed for order #' . $order->order_no,
-                ]);
+            // Jika order kembali ke draft → rollback stok
+            if ($order->isDraft()) {
+                self::rollbackStock($order);
+                return;
             }
 
-            $order->update(['status' => 'confirmed']);
+            // Jika order dikonfirmasi → kurangi stok
+            if ($order->isConfirmed()) {
+                self::rollbackStock($order); // bersihkan sebelumnya
+                self::applyStock($order);
+            }
+
+            // Completed → tidak ada perubahan stok lebih lanjut
+            if ($order->isCompleted()) {
+                return; // stok sudah pernah dikurangi saat confirmed
+            }
+
+            // Cancelled → rollback stok
+            if ($order->isCancelled()) {
+                self::rollbackStock($order);
+            }
         });
     }
 
-    /**
-     * Cancel a sale order (optional)
-     */
-    public static function cancel(Order $order): void
+    private static function applyStock(Order $order): void
+    {
+        foreach ($order->items as $item) {
+
+            $product = $item->item;
+            if (! $product) continue;
+
+            $qty = abs((float) $item->qty);
+
+            // kurangi stok
+            $product->current_stock -= $qty;
+            if ($product->current_stock < 0) $product->current_stock = 0;
+            $product->save();
+
+            ReorderAlertService::check($product);
+
+            // catat movement
+            StockMovement::create([
+                'item_id' => $item->item_id,
+                'movement_type' => 'sale_out',
+                'reference_table' => 'orders',
+                'reference_id' => $order->id,
+                'qty' => $qty,
+                'unit_id' => $item->unit_id,
+                'unit_cost' => $product->average_cost,
+                'created_by' => $order->created_by ?? auth()->id(),
+                'notes' => "Penjualan atas order #{$order->order_no}",
+            ]);
+        }
+    }
+    private static function rollbackStock(Order $order): void
+    {
+        $movements = StockMovement::where('reference_table', 'orders')
+            ->where('reference_id', $order->id)
+            ->get();
+
+        foreach ($movements as $mv) {
+            $product = $mv->item;
+            if (!$product) continue;
+
+            $product->current_stock += abs($mv->qty);
+            $product->save();
+            ReorderAlertService::check($product);
+        }
+
+        // hapus movement lama
+        StockMovement::where('reference_table', 'orders')
+            ->where('reference_id', $order->id)
+            ->delete();
+    }
+
+
+    // 
+
+    public static function recalculateTotal(Order $order): void
+    {
+        $total = $order->items()->sum('line_total');
+        $grand = $total - (float)($order->discount ?? 0);
+
+        $order->update([
+            'total_amount' => $total,
+            'grand_total' => max(0, $grand),
+        ]);
+    }
+
+    public static function delete(Order $order): void
     {
         DB::transaction(function () use ($order) {
-            foreach ($order->items as $itemRow) {
-                $item = $itemRow->item;
-                $qtyInBase = UnitConversionService::convert(
-                    $itemRow->qty,
-                    $itemRow->unit_id,
-                    $item->base_unit_id
-                );
 
-                $item->current_stock += $qtyInBase;
-                $item->save();
+            self::rollback($order);
 
-                StockMovement::create([
-                    'item_id' => $item->id,
-                    'movement_type' => 'adjustment',
-                    'reference_table' => 'orders',
-                    'reference_id' => $order->id,
-                    'qty' => abs($itemRow->qty),
-                    'unit_id' => $itemRow->unit_id,
-                    'unit_cost' => $item->average_cost,
-                    'created_by' => $order->created_by,
-                    'notes' => 'Order cancelled, stock restored for order #' . $order->order_no,
-                ]);
-            }
+            $order->items()->delete();
 
-            $order->update(['status' => 'cancelled']);
+            $order->delete();
         });
     }
 }

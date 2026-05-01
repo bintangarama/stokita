@@ -25,9 +25,20 @@ class ItemResource extends Resource
     protected static ?string $model = Item::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-archive-box';
-    protected static string | UnitEnum | null $navigationGroup = 'Master Data';
-    // protected static ?string $navigationLabel = 'Item';
-    protected static ?string $recordTitleAttribute = 'Item';
+
+    protected static ?string $navigationLabel = 'Persediaan';
+    protected static string | UnitEnum | null $navigationGroup = 'DATA MASTER';
+    protected static ?string $modelLabel = 'Persediaan';
+    protected static ?string $slug = 'persediaan';
+
+    protected static ?string $recordTitleAttribute = 'name';
+
+    public static function getNavigationBadge(): ?string
+    {
+        $count = Item::whereColumn('current_stock', '<=', 'reorder_threshold')->count();
+
+        return $count > 0 ? (string) $count : null;
+    }
 
     public static function form(Schema $schema): Schema
     {
@@ -61,12 +72,4 @@ class ItemResource extends Resource
             'edit' => EditItem::route('/{record}/edit'),
         ];
     }
-
-    // public static function getRecordRouteBindingEloquentQuery(): Builder
-    // {
-    //     return parent::getRecordRouteBindingEloquentQuery()
-    //         ->withoutGlobalScopes([
-    //             SoftDeletingScope::class,
-    //         ]);
-    // }
 }

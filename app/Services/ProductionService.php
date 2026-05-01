@@ -70,6 +70,7 @@ class ProductionService
 
                 $item->current_stock -= $qtyBase;
                 $item->save();
+                ReorderAlertService::check($item);
 
                 $components[] = [
                     'ingredient_item_id' => $item->id,
@@ -128,6 +129,7 @@ class ProductionService
                 $outputQtyBase > 0 ? ($grandTotalCost / $outputQtyBase) : $producedItem->average_cost;
 
             $producedItem->save();
+            ReorderAlertService::check($producedItem);
 
             StockMovement::create([
                 'item_id'        => $producedItem->id,

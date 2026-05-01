@@ -22,9 +22,13 @@ class UnitResource extends Resource
     protected static ?string $model = Unit::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-scale';
-    // protected static ?string $navigationLabel = 'Satuan';
-    protected static string | UnitEnum | null $navigationGroup = 'Master Data';
-    protected static ?string $recordTitleAttribute = 'Unit';
+
+
+    protected static ?string $navigationLabel = 'Satuan';
+    protected static string | UnitEnum | null $navigationGroup = 'DATA MASTER';
+    protected static ?string $modelLabel = 'Satuan';
+    protected static ?string $slug = 'satuan';
+    protected static ?string $recordTitleAttribute = 'code';
 
     public static function form(Schema $schema): Schema
     {

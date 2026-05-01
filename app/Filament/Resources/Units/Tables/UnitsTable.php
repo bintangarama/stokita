@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources\Units\Tables;
 
+use App\Filament\Exports\UnitExporter;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ExportAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -40,6 +42,13 @@ class UnitsTable
                 ViewAction::make(),
                 EditAction::make(),
             ])
+            // ->headerActions([
+            //     ExportAction::make('export')
+            //         ->label('Export Semua')
+            //         ->exporter(UnitExporter::class)
+            //     // Optional: batasi format yang diizinkan
+            //     ,
+            // ])
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),

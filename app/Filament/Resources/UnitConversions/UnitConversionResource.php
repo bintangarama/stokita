@@ -22,8 +22,13 @@ class UnitConversionResource extends Resource
     protected static ?string $model = UnitConversion::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrows-right-left';
-    protected static string | UnitEnum | null $navigationGroup = 'Master Data';
-    protected static ?string $recordTitleAttribute = 'Unit Conversion';
+
+    protected static ?string $navigationLabel = 'Konversi Satuan';
+    protected static string | UnitEnum | null $navigationGroup = 'DATA MASTER';
+    protected static ?string $modelLabel = 'Konversi Satuan';
+    protected static ?string $slug = 'konversi-satuan';
+
+    protected static ?string $recordTitleAttribute = 'unit_from_id';
 
     public static function form(Schema $schema): Schema
     {

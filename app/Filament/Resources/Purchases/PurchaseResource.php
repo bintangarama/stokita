@@ -23,9 +23,13 @@ class PurchaseResource extends Resource
     protected static ?string $model = Purchase::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-receipt-percent';
-    protected static string | UnitEnum | null $navigationGroup = 'Transaksi';
 
-    protected static ?string $recordTitleAttribute = 'Purchase';
+    protected static ?string $navigationLabel = 'Pembelian';
+    protected static string | UnitEnum | null $navigationGroup = 'OPERASIONAL';
+    protected static ?string $modelLabel = 'Pembelian';
+    protected static ?string $slug = 'pembelian';
+
+    protected static ?string $recordTitleAttribute = 'invoice_no';
 
     public static function form(Schema $schema): Schema
     {

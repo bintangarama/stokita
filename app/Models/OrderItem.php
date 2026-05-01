@@ -15,6 +15,16 @@ class OrderItem extends Model
         'line_total'
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($item) {
+            $item->line_total = (float)$item->qty * (float)$item->unit_price;
+        });
+    }
+
+
     public function order()
     {
         return $this->belongsTo(Order::class);

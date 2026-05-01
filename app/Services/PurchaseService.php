@@ -49,6 +49,7 @@ class PurchaseService
             $item = Item::find($itemId);
             if ($item) {
                 \App\Services\StockRecalculationService::recalcItem($item);
+                ReorderAlertService::check($item);
             }
         }
     }
@@ -80,6 +81,7 @@ class PurchaseService
 
         // rekalkulasi item dari ledger (single source of truth)
         \App\Services\StockRecalculationService::recalcItem($product);
+        ReorderAlertService::check($product);
     }
 
     public static function recalculateTotal(Purchase $purchase): void

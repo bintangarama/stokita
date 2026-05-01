@@ -23,12 +23,13 @@ class ProductionsTable
                     ->label('Resep')
                     ->sortable()
                     ->searchable(),
-                TextColumn::make('produced_unit_id')
-                    ->numeric()
-                    ->sortable(),
                 TextColumn::make('produced_qty')
                     ->label('Jumlah')
-                    ->numeric(4)
+                    ->numeric()
+                    ->sortable(),
+                TextColumn::make('unit.name')
+                    ->label('Satuan')
+                    ->numeric()
                     ->sortable(),
                 TextColumn::make('cost_total')
                     ->label('Total Biaya')

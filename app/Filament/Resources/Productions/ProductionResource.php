@@ -23,11 +23,13 @@ class ProductionResource extends Resource
     protected static ?string $model = Production::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-cog-6-tooth';
-    protected static string | UnitEnum| null $navigationGroup = 'Transaksi';
-    // protected static ?string $navigationLabel = 'Produksi';
-    // protected static ?string $pluralModelLabel = 'Produksi';
 
-    protected static ?string $recordTitleAttribute = 'Production';
+    protected static ?string $navigationLabel = 'Produksi';
+    protected static string | UnitEnum | null $navigationGroup = 'OPERASIONAL';
+    protected static ?string $modelLabel = 'Produksi';
+    protected static ?string $slug = 'produksi';
+
+    protected static ?string $recordTitleAttribute = 'produced_item_id';
 
     public static function form(Schema $schema): Schema
     {

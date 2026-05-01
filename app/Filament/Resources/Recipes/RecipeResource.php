@@ -22,9 +22,13 @@ class RecipeResource extends Resource
     protected static ?string $model = Recipe::class;
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-beaker';
-    protected static string | UnitEnum| null $navigationGroup = 'Master Data';
-    // protected static ?string $navigationLabel = 'Resep (BoM)';
-    protected static ?string $recordTitleAttribute = 'Recipe';
+
+
+    protected static ?string $navigationLabel = 'Resep';
+    protected static string | UnitEnum | null $navigationGroup = 'DATA MASTER';
+    protected static ?string $modelLabel = 'Resep';
+    protected static ?string $slug = 'resep';
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Schema $schema): Schema
     {
