@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Unit extends Model
 {
+    use HasFactory;
     protected $fillable = ['code', 'name'];
 
     public function conversionsFrom()
