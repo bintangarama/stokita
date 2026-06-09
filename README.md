@@ -19,6 +19,11 @@ Stokita adalah aplikasi manajemen inventaris dan produksi terintegrasi yang dira
 
 > **Beberapa Screenshot dari Aplikasi**.
 
+### 🔐 Halaman Login
+
+![Dashboard](public/screenshots/login.png)
+_Tampilan halaman login._
+
 ### 🖥️ Dashboard & Statistik
 
 ![Dashboard](public/screenshots/dashboard.png)
@@ -38,6 +43,16 @@ _Detail produksi yang secara otomatis memotong stok bahan baku berdasarkan resep
 ### 🧾 Transaksi Penjualan
 
 ![Orders](public/screenshots/order.png)
+_Manajemen pesanan pelanggan terintegrasi dengan pengurangan stok produk jadi._
+
+### ⚙️ Management User
+
+![Orders](public/screenshots/user.png)
+_Manajemen pesanan pelanggan terintegrasi dengan pengurangan stok produk jadi._
+
+### 🔔 Notifikasi
+
+![Orders](public/screenshots/notification.png)
 _Manajemen pesanan pelanggan terintegrasi dengan pengurangan stok produk jadi._
 
 ## 🛠️ Tech Stack
@@ -94,7 +109,7 @@ Proyek ini menonjolkan beberapa pola desain dan konsep teknis tingkat lanjut:
 
     _Jangan lupa atur database di file `.env`._
 
-5. Jalankan Migrasi & Seeder (Data Portofolio):
+5. Jalankan Migrasi & Seeder:
     ```bash
     php artisan migrate --seed
     ```
@@ -108,4 +123,4 @@ Proyek ini menonjolkan beberapa pola desain dan konsep teknis tingkat lanjut:
 
 ---
 
-**Project by Bintang Aditya Ramadhan** - Dikembangkan sebagai demonstrasi keahlian dalam pengembangan aplikasi enterprise dan SCM menggunakan ekosistem Laravel modern.
+**Project by Bintang Aditya Ramadhan** - Dikembangkan sebagai tugas kuliah dan demonstrasi keahlian dalam pengembangan aplikasi enterprise SCM menggunakan ekosistem Laravel modern.
