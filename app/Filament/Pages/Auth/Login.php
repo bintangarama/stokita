@@ -28,8 +28,8 @@ class Login extends \Filament\Auth\Pages\Login
         parent::mount();
 
         $this->form->fill([
-            'email' => 'demo@stokita.com',
-            'password' => 'demodemo',
+            'email' => 'admin@stokita.com',
+            'password' => 'adminadmin',
             'remember' => true,
         ]);
     }

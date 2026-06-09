@@ -1,59 +1,111 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Stokita - Catering Inventory & Production Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Stokita adalah aplikasi manajemen inventaris dan produksi terintegrasi yang dirancang khusus untuk kebutuhan bisnis katering. Proyek ini mendemonstrasikan implementasi alur kerja SCM pada ERP (Enterprise Resource Planning) yang kompleks, mulai dari pengadaan bahan baku, manajemen resep bertingkat (Bill of Materials), hingga pemrosesan pesanan pelanggan secara real-time.
 
-## About Laravel
+## 🚀 Fitur Utama
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Manajemen Inventaris Multi-Level**: Mendukung tiga tipe barang:
+    - **Raw Material**: Bahan baku dasar (contoh: Beras, Ayam, Sayuran).
+    - **Component**: Bahan setengah jadi hasil produksi internal (contoh: Sambal, Ayam Ungkep).
+    - **Finish Good**: Produk akhir siap jual (contoh: Nasi Kotak).
+- **Bill of Materials (BoM) & Recipes**: Struktur resep bertingkat yang memungkinkan bahan setengah jadi digunakan sebagai komponen produk akhir.
+- **Siklus Produksi Otomatis**: Fitur produksi yang otomatis memotong stok bahan baku/komponen dan menambah stok produk jadi berdasarkan resep, lengkap dengan kalkulasi biaya rata-rata (Average Costing).
+- **Manajemen Pembelian (Procurement)**: Pencatatan pembelian dari supplier yang secara otomatis memperbarui stok dan menghitung harga pokok barang.
+- **Sistem Penjualan (Order)**: Pemrosesan pesanan pelanggan dengan status bertingkat (Draft, Confirmed, Completed) yang terintegrasi dengan pengurangan stok produk jadi.
+- **Pelacakan Stok (Stock Movements)**: Log komprehensif untuk setiap perubahan stok (Masuk, Keluar, Produksi, Penjualan).
+- **Role & Permission**: Manajemen hak akses menggunakan Spatie Laravel Permission (Admin, Manager, Staff).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📸 Screenshots
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+> **Beberapa Screenshot dari Aplikasi**.
 
-## Learning Laravel
+### 🖥️ Dashboard & Statistik
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+![Dashboard](public/screenshots/dashboard.png)
+![Dashboard](public/screenshots/dashboard2.png)
+_Tampilan ringkasan stok rendah, pesanan terbaru, dan statistik pendapatan._
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 📦 Manajemen Inventaris & BoM
 
-## Laravel Sponsors
+![Inventory](public/screenshots/inventory.png)
+_Daftar item katering dengan kategori Raw Material, Component, dan Finish Good._
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 🍳 Proses Produksi
 
-### Premium Partners
+![Production](public/screenshots/production.png)
+_Detail produksi yang secara otomatis memotong stok bahan baku berdasarkan resep._
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 🧾 Transaksi Penjualan
 
-## Contributing
+![Orders](public/screenshots/order.png)
+_Manajemen pesanan pelanggan terintegrasi dengan pengurangan stok produk jadi._
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## 🛠️ Tech Stack
 
-## Code of Conduct
+- **Framework**: [Laravel 12](https://laravel.com/)
+- **Admin Panel**: [Filament v4](https://filamentphp.com/) (TALL Stack: Tailwind, Alpine.js, Laravel, Livewire)
+- **Database**: MySQL
+- **Role Management**: [Spatie Laravel Permission](https://spatie.be/docs/laravel-permission/)
+- **Utility**: Laravel Service Pattern, Model Observers, Unit Conversions.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 📐 Arsitektur & Konsep Teknis
 
-## Security Vulnerabilities
+Proyek ini menonjolkan beberapa pola desain dan konsep teknis tingkat lanjut:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- **Service Pattern**: Logika bisnis yang kompleks (seperti Produksi dan Penjualan) dipisahkan ke dalam kelas Service khusus untuk menjaga kontroler tetap bersih dan kode mudah diuji.
+- **Model Observers**: Digunakan untuk menangani efek samping data secara otomatis, seperti penghitungan `line_total` pada item transaksi atau pembaruan stok otomatis.
+- **Unit Conversion Engine**: Sistem cerdas yang mampu menangani konversi antar satuan (misal: beli dalam KG, pakai dalam GR) secara otomatis dalam kalkulasi stok.
+- **Average Costing Method**: Penghitungan harga pokok barang yang dinamis berdasarkan histori pembelian terbaru.
 
-## License
+## 📋 Prasyarat
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- PHP >= 8.2
+- Composer
+- Node.js & NPM
+
+## ⚙️ Instalasi
+
+1. Clone repositori:
+
+    ```bash
+    git clone https://github.com/bintangarama/stokita.git
+    cd stokita
+    ```
+
+2. Instal dependensi PHP:
+
+    ```bash
+    composer install
+    ```
+
+3. Instal dependensi Frontend:
+
+    ```bash
+    npm install
+    npm run build
+    ```
+
+4. Konfigurasi Environment:
+
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
+
+    _Jangan lupa atur database di file `.env`._
+
+5. Jalankan Migrasi & Seeder (Data Portofolio):
+    ```bash
+    php artisan migrate --seed
+    ```
+    _Seeder akan membuat akun admin, satuan, data item katering, supplier, customer, hingga simulasi transaksi pembelian dan produksi._
+
+## 🔑 Akses Default (Data Seeder)
+
+- **URL**: `/login`
+- **Email**: `admin@stokita.com`
+- **Password**: `adminadmin`
+
+---
+
+**Project by Bintang Aditya Ramadhan** - Dikembangkan sebagai demonstrasi keahlian dalam pengembangan aplikasi enterprise dan SCM menggunakan ekosistem Laravel modern.

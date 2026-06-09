@@ -20,7 +20,13 @@ class Item extends Model
         'current_stock',
         'average_cost',
         'last_purchase_price',
-        'selling_price'
+        'selling_price',
+        'last_reorder_alert_at'
+    ];
+
+    protected $casts = [
+        'last_reorder_alert_at' => 'datetime',
+        'track_stock' => 'boolean',
     ];
 
     public function baseUnit()

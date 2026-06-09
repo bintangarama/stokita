@@ -32,8 +32,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
-        // PurchaseItem::observe(PurchaseItemObserver::class);
-        // Purchase::observe(PurchaseObserver::class);
+        PurchaseItem::observe(PurchaseItemObserver::class);
+        Purchase::observe(PurchaseObserver::class);
         Production::observe(ProductionObserver::class);
 
         // Cek jika sedang diakses via Ngrok, paksa HTTPS
