@@ -36,10 +36,10 @@ class AppServiceProvider extends ServiceProvider
         Purchase::observe(PurchaseObserver::class);
         Production::observe(ProductionObserver::class);
 
-        // Cek jika sedang diakses via Ngrok, paksa HTTPS
-        // if (str_contains(request()->url(), 'ngrok-free.app')) {
-        //     URL::forceScheme('https');
-        // }
+        // Cek jika diakses via production/Vercel, paksa HTTPS
+        if ($this->app->environment('production') || str_contains(request()->url(), 'vercel.app')) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
         // Menyuntikkan meta theme-color ke dalam Head Filament
         FilamentView::registerRenderHook(
             PanelsRenderHook::HEAD_END,
