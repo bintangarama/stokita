@@ -2,6 +2,8 @@
 
 Stokita adalah aplikasi manajemen inventaris dan produksi terintegrasi yang dirancang khusus untuk kebutuhan bisnis katering. Proyek ini mendemonstrasikan implementasi alur kerja SCM pada ERP (Enterprise Resource Planning) yang kompleks, mulai dari pengadaan bahan baku, manajemen resep bertingkat (Bill of Materials), hingga pemrosesan pesanan pelanggan secara real-time.
 
+🌐 **Demo Live**: [https://stokita-ims.vercel.app](https://stokita-ims.vercel.app)
+
 ## 🚀 Fitur Utama
 
 - **Manajemen Inventaris Multi-Level**: Mendukung tiga tipe barang:
@@ -117,9 +119,15 @@ Proyek ini menonjolkan beberapa pola desain dan konsep teknis tingkat lanjut:
 
 ## 🔑 Akses Default (Data Seeder)
 
-- **URL**: `/login`
+- **Demo Live**: [https://stokita-ims.vercel.app](https://stokita-ims.vercel.app)
+- **Local URL**: `http://localhost:8000/login`
 - **Email**: `admin@stokita.com`
 - **Password**: `adminadmin`
+
+## ☁️ Deployment & Database
+Aplikasi ini dideploy dengan arsitektur modern:
+- **Application Server**: [Vercel](https://vercel.com/) (menggunakan Serverless Functions PHP)
+- **Database Server**: MySQL yang di-host pada VPS Pribadi (dioptimalkan untuk akses remote dengan latensi rendah dari region Vercel Singapore `sin1`)
 
 ---
 
